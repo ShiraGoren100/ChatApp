@@ -1,0 +1,23 @@
+.foo {
+    width: 400 px;
+    height: 150px;
+    padding-top: 10px;
+}
+.bar {
+    width: 600 px;
+    height: 250px;
+    padding-top: 10px;
+}
+#nameError {
+    display: none;
+    font-size: 0.8em;
+  }
+  
+  #nameError.visible {
+    display: block;
+  }
+  
+  input.invalid {
+    border-color: red;
+  }
+  input {width: 100px;} 
