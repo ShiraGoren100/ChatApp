@@ -1,9 +1,8 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component } from "react";
 import { Modal } from "bootstrap";
 import webClient4 from "./webClient4.jpg"
 import { BrowserRouter, Routes, Route, Link, withRouter, useNavigate, NavigationType } from 'react-router-dom'
-
-
+import users from "../users";
 
 
 const Validation = ({ error, ...rest }) => {
@@ -32,8 +31,6 @@ class Login extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            exists: false,
-            validPassword: false,
             name: '',
             password: '',
             staticBackdrop: '',
@@ -45,54 +42,19 @@ class Login extends React.Component {
         }
     }
 
-    fetchValidity=()=>{
-        fetch('https://localhost:7188/api/Contacts/exists?c_id='+this.state.name)
-        .then((response) => response.json())
-        .then(existing => {
-            this.setState({ exists: existing });
-        });
-        
-        fetch('https://localhost:7188/api/Contacts/passwordCheck?c_id='+this.state.name+'&p='+this.state.password)
-        .then((response) => response.json())
-        .then(valid => {
-            this.setState({ validPassword: valid });
-        });
-        console.log("HI");
-    }
-    // async componentDidMount() {
-    //     // when react first renders then it called componentDidMount()
-    //     const response = await fetch('https://localhost:7188/api/Contacts/exists?c_id='+this.state.name)
-    //     .then((response) => response.json())
-    //     .then(existing => {
-    //         this.setState({ exists: existing });
-    //     });
-    //   }
-
     OnFormSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state);
-              // //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        // fetch('https://localhost:7188/api/Contacts/everyone')
-        // .then((response) => response.json())
-        // .then(ev => {
-        //     this.setState({ everyone: ev });
-        // });
        
-    console.log(this.state);
-        if (!this.state.exists)
-        {
-                console.log("in1");
-                var myModal = new Modal(document.getElementById('staticBackdrop'), {
-                    keyboard: false
-                })
-                myModal.show()
-                event.preventDefault();
-                return;
+        if (!users.hasOwnProperty(this.state.name)) {
+            var myModal = new Modal(document.getElementById('staticBackdrop'), {
+                keyboard: false
+            })
+            myModal.show()
+            event.preventDefault();
+            return;
 
-        }else {
-            //check password
-            if (!this.state.validPassword) {
-                console.log("in2");
+        } else {
+            if (users[this.state.name][0] !== this.state.password) {
                 var myModal = new Modal(document.getElementById('staticBackdrop'), {
                     keyboard: false
                 })
@@ -101,7 +63,6 @@ class Login extends React.Component {
                 return;
             }
         }
-        //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         if (Validation(this.state)) {
             console.log(this.state)
         } else {
@@ -109,14 +70,14 @@ class Login extends React.Component {
         }
         if (this.state.error.name === '' && this.state.error.password === '') {
             let username = this.state.name;
-            console.log("got through");
+            console.log(username);
             window.localStorage.setItem("userName",username);
             //this.router.navigate(['/chat'], {state: {username}});
             this.props.navigate('/chat', {name: username});
         }
     };
 
-    formObject1 = event => {
+    formObject = event => {
 
         event.preventDefault();
 
@@ -127,33 +88,6 @@ class Login extends React.Component {
             case "name":
                 error.name = value.length == 0 ? "Please enter your name" : "";
                 break;
-            // case "password":
-            //     error.password = value.length == 0
-            //         ? "Please enter your password" : "";
-            //     break;
-            default:
-                break;
-        }
-
-        this.setState({
-            error,
-            [name]: value
-        })  
-        this.fetchValidity();
-    };
-
-
-    formObject2 = event => {
-
-        event.preventDefault();
-
-        const { name, value } = event.target;
-        let error = { ...this.state.error };
-
-        switch (name) {
-            // case "name":
-            //     error.name = value.length == 0 ? "Please enter your name" : "";
-            //     break;
             case "password":
                 error.password = value.length == 0
                     ? "Please enter your password" : "";
@@ -166,11 +100,12 @@ class Login extends React.Component {
             error,
             [name]: value
         })
-        this.fetchValidity();
     };
 
     render() {
+
         const { error } = this.state;
+
         return (
             <div class=".container bg">
                 <div class="bg-success p-2 text-white">
@@ -196,7 +131,7 @@ class Login extends React.Component {
                                     required
                                     type="text"
                                     name="name"
-                                    onChange={this.formObject1}
+                                    onChange={this.formObject}
                                     className={error.name.length > 0 ? "is-invalid form-control" : "form-control"} />
 
                                 {error.name.length > 0 && (
@@ -210,7 +145,7 @@ class Login extends React.Component {
                                     type="password"
                                     name="password"
                                     className={error.password.length > 0 ? "is-invalid form-control" : "form-control"}
-                                    onChange={this.formObject2} />
+                                    onChange={this.formObject} />
 
                                 {error.password.length > 0 && (
                                     <span className="invalid-feedback">{error.password}</span>

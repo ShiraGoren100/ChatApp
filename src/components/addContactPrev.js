@@ -2,60 +2,39 @@ import users from "../users";
 import React, { Component, useRef } from "react";
 import AllChats from "../AllChats";
 import number from "./number";
-import axios from 'axios'
-
 function random(low, high) {
     return Math.random() * (high - low) + low
 }
 
-
-
 class Contact extends React.Component  {
-
 
     constructor(props) {
         super(props)
         this.state = {
-            yes: false,
             name: '',
             error: {
                 name: ''
             }
         }
     }
-
-    fetchValidity=(name)=>{
-        console.log(name);
-        fetch('https://localhost:7188/api/Contacts/exists?c_id='+name)
-        .then((response) => response.json())
-        .then(existing => { 
-            console.log(existing);
-
-            this.setState({ yes: existing });
-        });
-        console.log(this.state);
-    }
-
     formObject = event => {
 
         event.preventDefault();
+
         const { name, value } = event.target;
         let error = { ...this.state.error };
-        this.fetchValidity(value);
-        
+
         switch (name) {
             case "name":
                 if (value === '') {error.name = "";break}
-                {console.log(this.state)}
-               //need to make query- check if person exists on server
-                if(!this.state.yes){error.name ="this user name does not exist"; break;}
-                if(this.props.contactList.hasOwnProperty(value)) {error.name ="this user name already exists";break}
+                if(!users.hasOwnProperty(value)){error.name ="this user name does not exist"; break;}
+                if(users[this.props.myName][2].hasOwnProperty(value)) {error.name ="this user name already exists";break}
                 else {error.name = "";}
                 break;
             default:
                 break;
         }
-        
+
         this.setState({
             error,
             [name]: value
@@ -68,40 +47,32 @@ class Contact extends React.Component  {
             event.preventDefault();
             return;
         }
-
-        // axios.post(`https://localhost:7188/api/Contacts`, {})
-        // .then(res => {
-        // console.log(res);
-        // console.log(res.data);
-        // })
-
-        // let num = random(3,1000000);
-        // while (number.includes(num)) {
-        //     num = random(3,1000000);
-        // }
-        // const dict ={};
-        // const dict2={};
-        // var chat =[];
-        // AllChats[num] = chat;
-        // dict[this.state.name] = num;
-        // for (const [key, value] of Object.entries(users[this.props.myName][2])) {
-        //     dict[key] = value;
-        // }
-        // console.log("the num is " + num)
+        let num = random(3,1000000);
+        while (number.includes(num)) {
+            num = random(3,1000000);
+        }
+        const dict ={};
+        const dict2={};
+        var chat =[];
+        AllChats[num] = chat;
+        dict[this.state.name] = num;
+        for (const [key, value] of Object.entries(users[this.props.myName][2])) {
+            dict[key] = value;
+        }
+        console.log("the num is " + num)
        
-        // dict2[this.props.myName] = num;
-        // for (const [key, value] of Object.entries(users[this.state.name][2])) {
-        //     dict2[key] = value;
-        // }
-        // this.props.setFunction(users[this.props.myName][2] = dict);
-        // users[this.state.name][2] = dict2;
-        // this.props.closeBox.current.click();
-        // num++;
+        dict2[this.props.myName] = num;
+        for (const [key, value] of Object.entries(users[this.state.name][2])) {
+            dict2[key] = value;
+        }
+        this.props.setFunction(users[this.props.myName][2] = dict);
+        users[this.state.name][2] = dict2;
+        this.props.closeBox.current.click();
+        num++;
     };
 render() {
     let c = this.props.closeBox;
     const { error } = this.state;
-
 
     return (
         <div>

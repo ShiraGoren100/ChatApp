@@ -4,6 +4,7 @@ const users = {"Idit Silman": ["Iditsilman1", "idit Silman", {"Naftali Benet":"1
 "Yair Lapid": ["Yairlapid1", "Lapid",{"Naftali Benet":"5"}, "", 'https://img.mako.co.il/2018/04/18/yair_lapid_duck.JPG'],
 "Mansour Abbas": ["Muhammad456", "Mansour Abbas",{"Naftali Benet":"4"}, "", 'https://ynet-images1.yit.co.il/picserver5/crop_images/2021/03/25/10617674/10617674_0_30_1300_732_0_x-large.jpg'],
 "Bezalel Smotrich": ["MashiachIs101", "Smotrich",{"Merav Michaeli":"6"}, "", 'https://static.zman.co.il/www/uploads/2019/06/F170517YS29-1-1024x640.jpg'],
-"Merav Michaeli": ["MashiachIs101", "Merav Michaeli",{"Bezalel Smotrich":"6"}, "", 'https://actualic.co.il/wp-content/uploads/2021/05/e2808fe2808fd79cd79bd799d793d794-25.jpg']
+"Merav Michaeli": ["MashiachIs101", "Merav Michaeli",{"Bezalel Smotrich":"6"}, "", 'https://actualic.co.il/wp-content/uploads/2021/05/e2808fe2808fd79cd79bd799d793d794-25.jpg'],
+"snow white":["snowWhite2", "snow white",{}, ""]
 };
 export default users;
