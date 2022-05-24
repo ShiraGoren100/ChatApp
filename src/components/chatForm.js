@@ -240,7 +240,7 @@ function Chat() {
          <div class={"chatblockNoBody"} id="starterChatBlock2"></div>
         <div class={"adresseeblock"}></div>
         <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-        <div class ="positioning">{addContact(userName, setUsers)}</div>
+        <div class ="positioning">{addContact(userName, setUsers, contactList)}</div>
         </div>
         </div>
        

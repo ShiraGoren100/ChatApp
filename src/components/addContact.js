@@ -29,12 +29,24 @@ class Contact extends React.Component  {
         fetch('https://localhost:7188/api/Contacts/exists?c_id='+name)
         .then((response) => response.json())
         .then(existing => { 
-            console.log(existing);
-
-            this.setState({ yes: existing });
+            this.setState({
+                yes: existing
+            })
         });
-        console.log(this.state);
     }
+
+    alreadyAContact = (value, contactLis)=>{
+          {/*loop through contacts and create contact buttons for each*/}
+        let i = 0;
+        for(; i < contactLis.length; i ++){
+            if (contactLis[i].id == value){
+                return true;
+            }
+        }
+            return false;
+        };
+        
+        
 
     formObject = event => {
 
@@ -46,10 +58,9 @@ class Contact extends React.Component  {
         switch (name) {
             case "name":
                 if (value === '') {error.name = "";break}
-                {console.log(this.state)}
                //need to make query- check if person exists on server
-                if(!this.state.yes){error.name ="this user name does not exist"; break;}
-                if(this.props.contactList.hasOwnProperty(value)) {error.name ="this user name already exists";break}
+              //  if(!this.state.yes){error.name ="this user name does not exist"; break;}
+                if(this.alreadyAContact(value, this.props.contactList)) {error.name ="this user name already exists";break}
                 else {error.name = "";}
                 break;
             default:
@@ -68,6 +79,9 @@ class Contact extends React.Component  {
             event.preventDefault();
             return;
         }
+
+        axios.post('https://localhost:7188/api/Contacts?c_id='+this.state.name+'&name='+this.state.name+'&server=https://localhost:7188/');
+    
 
         // axios.post(`https://localhost:7188/api/Contacts`, {})
         // .then(res => {
@@ -140,11 +154,12 @@ render() {
         );
     }
 }
-function AddContact(props, props2) {
+function AddContact(props, props2, props3) {
     let closeBox = useRef(undefined);
     let myName = props;
     let setFunction = props2;
-    return <Contact {...props} myName={myName} setFunction = {setFunction} closeBox = {closeBox}/>
+    let contactList = props3;
+    return <Contact {...props} myName={myName} setFunction = {setFunction} contactList = {contactList} closeBox = {closeBox}/>
 }
 
 export default AddContact;
