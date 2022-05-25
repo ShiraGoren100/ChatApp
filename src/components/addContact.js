@@ -90,7 +90,7 @@ class Contact extends React.Component {
                 console.log(response);
             }).catch(function (error) {
                 console.log(error);
-                this.setState.sucssess(false);
+                this.setState({ sucssess: false });
             });
 
         if (this.state.sucssess) {
@@ -106,7 +106,7 @@ class Contact extends React.Component {
         }
         else {
             //close here modal.
-            window.location.reload(false);
+            // window.location.reload(false);
 
         }
 
