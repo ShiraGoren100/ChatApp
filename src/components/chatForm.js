@@ -10,11 +10,11 @@ import {useState} from "react"
 import axios from 'axios'
 
 
-async function setUser(userName){
-    //put contact as current one
-    await axios.post('https://localhost:7188/api/Contacts/setMe?id='+userName);
+// async function setUser(userName){
+//     //put contact as current one
+//     await axios.post('https://localhost:7188/api/Contacts/setMe?id='+userName);
 
-  }
+//   }
 
 //create personalized chat screen
 function Chat() {
@@ -43,7 +43,7 @@ function Chat() {
     useEffect(
         async()=>{
         console.log("setting contacts");
-        const res = await fetch('https://localhost:7188/api/Contacts');
+        const res = await fetch('https://localhost:7188/api/Contacts?m_id='+userName);
         const data = await res.json();
         setList(data); 
         console.log("end contacts");     
@@ -56,7 +56,7 @@ function Chat() {
          async()=>{
          console.log("initializing curr");
 
-         const res = await fetch('https://localhost:7188/api/Contacts/current');
+         const res = await fetch('https://localhost:7188/api/Contacts/current?m_id='+userName);
          const data = await res.json();
          setcurr(data);
          console.log("end curr");
@@ -70,7 +70,7 @@ function Chat() {
          async()=>{
         console.log("setting open");
         console.log(curr);
-         const res = await fetch('https://localhost:7188/api/Contacts/'+curr.id+'/messages');
+         const res = await fetch('https://localhost:7188/api/Contacts/'+curr.id+'/messages?m_id='+userName);
          const data = await res.json();
 
          setopenChat(data);
@@ -82,7 +82,7 @@ function Chat() {
     async function getstuff(c){
         setcurr(c);
         console.log(curr);
-        const res = await fetch('https://localhost:7188/api/Contacts/'+curr.id+'/messages');
+        const res = await fetch('https://localhost:7188/api/Contacts/'+curr.id+'/messages?m_id='+userName);
         const data = await res.json();
         setopenChat(data);
       console.log(openChat);
@@ -156,8 +156,8 @@ function Chat() {
             //add new message to current chat
 
             //allChats[contactMap[users[userName][3]]].push(new Message(text, curTime, userName));
-            await axios.post('https://localhost:7188/api/Contacts/'+curr.id+'/messages?content='+text);
-            
+            await axios.post('https://localhost:7188/api/Contacts/'+curr.id+'/messages?m_id='+userName+'&content='+text);
+           
             addText(chat=>[...chat, text]);
             getOpenChat(curr);
             //scroll chat box to bottom
@@ -216,7 +216,7 @@ function Chat() {
                      {/**####################################################################################### */}
                 <div class={"adresseeblock"}><h2>&nbsp;&nbsp;{curr.name}</h2></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-                <div class ="positioning">{addContact(userName, setUsers, contactList)}</div>
+                <div class ="positioning">{addContact(userName, setUsers, contactList, userName)}</div>
             </div>
             </div>
 
@@ -240,7 +240,7 @@ function Chat() {
          <div class={"chatblockNoBody"} id="starterChatBlock2"></div>
         <div class={"adresseeblock"}></div>
         <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-        <div class ="positioning">{addContact(userName, setUsers, contactList)}</div>
+        <div class ="positioning">{addContact(userName, setUsers, contactList, userName)}</div>
         </div>
         </div>
        

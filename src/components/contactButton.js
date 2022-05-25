@@ -9,11 +9,10 @@ import axios from 'axios'
 
 
 //function changes current contact with open chat
-async function handleClick(contact, func){
+async function handleClick(user, contact, func){
     //put contact as current one
-    await axios.post(`https://localhost:7188/api/Contacts/current?c_id=`+contact.id);
+    await axios.post('https://localhost:7188/api/Contacts/current?m_id='+user+'&c_id='+contact.id);
     func(contact);
-  
     // console.log("done");
   }
 
@@ -25,7 +24,7 @@ function ContactButton(props) {
     if (props.contact.current == null) {
       return(
         <div>
-        <button class={"contactButton"} onClick={()=>{handleClick( props.contact,props.func)}} >
+        <button class={"contactButton"} onClick={()=>{handleClick(props.user, props.contact,props.func)}} >
         <span class = "smallFont"><span class = "time2">{props.contact.lastDate}</span></span>
         <div class="mss">
         <span class=".imageContact"></span> &nbsp;&nbsp;&nbsp;

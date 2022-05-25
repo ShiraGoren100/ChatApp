@@ -80,8 +80,8 @@ class Contact extends React.Component  {
             return;
         }
 
-        axios.post('https://localhost:7188/api/Contacts?c_id='+this.state.name+'&name='+this.state.name+'&server=https://localhost:7188/');
-    
+        axios.post('https://localhost:7188/api/Contacts?m_id='+
+        this.props.userName+'&c_id='+this.state.name+'&name='+this.state.name+'&server=https://localhost:7188/');
 
         // axios.post(`https://localhost:7188/api/Contacts`, {})
         // .then(res => {
@@ -154,12 +154,14 @@ render() {
         );
     }
 }
-function AddContact(props, props2, props3) {
+function AddContact(props, props2, props3, props4) {
     let closeBox = useRef(undefined);
     let myName = props;
     let setFunction = props2;
     let contactList = props3;
-    return <Contact {...props} myName={myName} setFunction = {setFunction} contactList = {contactList} closeBox = {closeBox}/>
+    let userName = props4;
+    return <Contact {...props} myName={myName} setFunction = {setFunction} 
+    contactList = {contactList} userName={userName} closeBox = {closeBox}/>
 }
 
 export default AddContact;
