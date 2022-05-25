@@ -17,6 +17,7 @@ class Contact extends React.Component {
         super(props)
         this.state = {
             yes: false,
+            contacts: this.props.contactList,
             name: '',
             nickname: '',
             server: '',
@@ -38,6 +39,19 @@ class Contact extends React.Component {
                     yes: existing
                 })
             });
+    }
+
+    getContacts=()=>{
+        //console.log(name);
+        console.log('getting new contactList');
+        fetch('https://localhost:7188/api/Contacts?m_id='+this.props.userName)
+        .then((response) => response.json())
+        .then(cont => {
+            this.setState({
+                contacts: cont
+            })
+        });;
+        console.log(this.state.contacts);
     }
 
     alreadyAContact = (value, contactLis) => {
@@ -108,10 +122,9 @@ class Contact extends React.Component {
         else {
             //close here modal.
             // window.location.reload(false);
-            console.log('getting new contactList');
-            fetch('https://localhost:7188/api/Contacts?m_id='+this.props.userName)
-            .then((response) => response.json())
-            .then(c =>{this.props.setFunction(c)});            
+            this.getContacts();
+            console.log(this.state.contacts);
+            this.props.setFunction(this.state.contacts);      
             this.props.closeBox.current.click();
 
         }
