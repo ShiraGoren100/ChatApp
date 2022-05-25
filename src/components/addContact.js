@@ -106,6 +106,8 @@ class Contact extends React.Component {
         }
         else {
             //close here modal.
+            window.location.reload(false);
+
         }
 
         // axios.post(`https://localhost:7188/api/Contacts`, {})
