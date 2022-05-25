@@ -86,7 +86,8 @@ class Contact extends React.Component {
         }
 
         axios.post('https://localhost:7188/api/Contacts?m_id=' +
-            this.props.userName + '&c_id=' + this.state.name + '&name=' + this.state.nickname + '&server=' + this.state.server).then(function (response) {
+            this.props.userName + '&c_id=' + this.state.name + '&name=' + this.state.nickname +
+             '&server=' + this.state.server).then(function (response) {
                 console.log(response);
             }).catch(function (error) {
                 console.log(error);
@@ -107,6 +108,11 @@ class Contact extends React.Component {
         else {
             //close here modal.
             // window.location.reload(false);
+            console.log('getting new contactList');
+            fetch('https://localhost:7188/api/Contacts?m_id='+this.props.userName)
+            .then((response) => response.json())
+            .then(c =>{this.props.setFunction(c)});            
+            this.props.closeBox.current.click();
 
         }
 
@@ -210,7 +216,7 @@ function AddContact(props, props2, props3, props4) {
     let contactList = props3;
     let userName = props4;
     return <Contact {...props} myName={myName} setFunction={setFunction}
-        contactList={contactList} userName={userName} closeBox={closeBox} />
+        contactList={contactList} userName={userName} con closeBox={closeBox} />
 }
 
 export default AddContact;
