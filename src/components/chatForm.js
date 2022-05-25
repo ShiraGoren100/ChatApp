@@ -157,7 +157,7 @@ function Chat() {
 
             //allChats[contactMap[users[userName][3]]].push(new Message(text, curTime, userName));
             await axios.post('https://localhost:7188/api/Contacts/'+curr.id+'/messages?m_id='+userName+'&content='+text);
-           
+            console.log("posted");
             addText(chat=>[...chat, text]);
             getOpenChat(curr);
             //scroll chat box to bottom
