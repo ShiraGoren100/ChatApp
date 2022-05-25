@@ -45,18 +45,18 @@ class Login extends React.Component {
         }
     }
 
-    fetchValidity=()=>{
-        fetch('https://localhost:7188/api/Contacts/exists?c_id='+this.state.name)
-        .then((response) => response.json())
-        .then(existing => {
-            this.setState({ exists: existing });
-        });
-        
-        fetch('https://localhost:7188/api/Contacts/passwordCheck?c_id='+this.state.name+'&p='+this.state.password)
-        .then((response) => response.json())
-        .then(valid => {
-            this.setState({ validPassword: valid });
-        });
+    fetchValidity = () => {
+        fetch('https://localhost:7188/api/Contacts/exists?c_id=' + this.state.name)
+            .then((response) => response.json())
+            .then(existing => {
+                this.setState({ exists: existing });
+            });
+
+        fetch('https://localhost:7188/api/Contacts/passwordCheck?c_id=' + this.state.name + '&p=' + this.state.password)
+            .then((response) => response.json())
+            .then(valid => {
+                this.setState({ validPassword: valid });
+            });
         console.log("HI");
     }
     // async componentDidMount() {
@@ -71,25 +71,24 @@ class Login extends React.Component {
     OnFormSubmit = (event) => {
         event.preventDefault();
         console.log(this.state);
-              // //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        // //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // fetch('https://localhost:7188/api/Contacts/everyone')
         // .then((response) => response.json())
         // .then(ev => {
         //     this.setState({ everyone: ev });
         // });
-       
-    console.log(this.state);
-        if (!this.state.exists)
-        {
-                console.log("in1");
-                var myModal = new Modal(document.getElementById('staticBackdrop'), {
-                    keyboard: false
-                })
-                myModal.show()
-                event.preventDefault();
-                return;
 
-        }else {
+        console.log(this.state);
+        if (!this.state.exists) {
+            console.log("in1");
+            var myModal = new Modal(document.getElementById('staticBackdrop'), {
+                keyboard: false
+            })
+            myModal.show()
+            event.preventDefault();
+            return;
+
+        } else {
             //check password
             if (!this.state.validPassword) {
                 console.log("in2");
@@ -110,9 +109,9 @@ class Login extends React.Component {
         if (this.state.error.name === '' && this.state.error.password === '') {
             let username = this.state.name;
             console.log("got through");
-            window.localStorage.setItem("userName",username);
+            window.localStorage.setItem("userName", username);
             //this.router.navigate(['/chat'], {state: {username}});
-            this.props.navigate('/chat', {name: username});
+            this.props.navigate('/chat', { name: username });
         }
     };
 
@@ -138,7 +137,7 @@ class Login extends React.Component {
         this.setState({
             error,
             [name]: value
-        })  
+        })
         this.fetchValidity();
     };
 
@@ -176,7 +175,7 @@ class Login extends React.Component {
                 <div class="bg-success p-2 text-white">
                     <h2 class="l" >  <i class="bi bi-globe2"></i> webClient</h2>
                     <center>
-                        <div class="animate__animated animate__zoomIn"><h1 class ="l">
+                        <div class="animate__animated animate__zoomIn"><h1 class="l">
                             Welcome To Web - Client! <br></br></h1>
                         </div>
                     </center>
