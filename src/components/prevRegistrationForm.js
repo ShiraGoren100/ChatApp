@@ -2,8 +2,7 @@ import React, { Component,useState } from "react";
 import { Modal } from "bootstrap";
 import webClient3 from "./webClient3.jpg"
 import { Link,useNavigate } from "react-router-dom";
-// import users from "../users";
-import axios from 'axios'
+import users from "../users";
 
 const regularExpression= RegExp(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/);
 let urlImage;
@@ -35,7 +34,6 @@ class Register extends Component {
         super(props)
 
         this.state = {
-            alreadyExists: false,
             name: '',
             password: '',
             staticBackdrop: '',
@@ -53,21 +51,9 @@ class Register extends Component {
         }
     }
 
-    exists=(name)=>{
-        //console.log(name);
-        fetch('https://localhost:7188/api/Contacts/exists?c_id='+name)
-        .then((response) => response.json())
-        .then(existing => { 
-            this.setState({
-                alreadyExists: existing
-            })
-        });
-    }
-
     onFormSubmit = event => {
-        let error = { ...this.state.error };
         event.preventDefault();
- 
+
         if (this.state.image !== '') {
             event.preventDefault();
             var idxDot = urlImage.lastIndexOf(".") + 1;
@@ -82,12 +68,6 @@ class Register extends Component {
             }
 
         }
-        if (this.state.alreadyExists){
-            {error.name ="this user name is already used" } 
-            this.setState({
-                error,
-            })
-        }
 
         if (validation(this.state)) {
             console.log(this.state)
@@ -101,11 +81,15 @@ class Register extends Component {
 
         if (this.state.error.name === '' && this.state.error.password === '', this.state.error.verifyPassword === ''
         && this.state.error.displayName === '' && this.state.error.image === '') {
-            //add person here
-            axios.post('https://localhost:7188/register?m_id='+this.state.name+'&name='+this.state.displayName+'&password='+this.state.password);
+            if(this.state.image === '') {
+                users[this.state.name.trim()] = [this.state.password, this.state.displayName.trim(),{},'','https://shoham.smarticket.co.il/uploads/upld5aaf8be85d246653337384.png' ]
+            }
+            else {
+                users[this.state.name.trim()] = [this.state.password, this.state.displayName.trim(),{},'',this.state.image]
+            }
             window.localStorage.setItem("userName",username);
             this.props.navigate('/chat', {username});
-            //console.log(users);
+            console.log(users);
         }
     };
 
@@ -115,15 +99,11 @@ class Register extends Component {
 
         let { name, value } = event.target;
         let error = { ...this.state.error };
-        
-        // console.log(this.State);
+
         switch (name) {
-            
             case "name":
-                this.exists(value);
-                console.log(this.state.alreadyExists);
                 error.name = value.trim().length == 0 ? "Please enter your name" : "";
-                if(this.state.alreadyExists){error.name ="this user name is already used" } 
+                if(users.hasOwnProperty(value)){error.name ="this user name is already used" } 
                 break;
             case "password":
                 error.password = regularExpression.test(value)
