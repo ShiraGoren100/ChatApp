@@ -49,6 +49,8 @@ function Chat() {
         console.log("end contacts");     
     }, []);
 
+    
+
      //get current
      const [curr, setcurr] = useState([]);
 
@@ -77,15 +79,13 @@ function Chat() {
                
      }, []);
 
-    
-
     async function getstuff(c){
         setcurr(c);
         console.log(curr);
-        const res = await fetch('https://localhost:7188/api/Contacts/'+curr.id+'/messages?m_id='+userName);
+        const res = await fetch('https://localhost:7188/api/Contacts/'+c.id+'/messages?m_id='+userName);
         const data = await res.json();
         setopenChat(data);
-      console.log(openChat);
+        console.log(openChat);
     }
 
     function getOpenChat(c){
@@ -143,7 +143,7 @@ function Chat() {
 
 
     var today = new Date();
-  
+    //const [last, setLast] = useState(true);
   
     //save new textMessage 
     const [chat, addText] = useState('');
@@ -160,6 +160,7 @@ function Chat() {
             console.log("posted");
             addText(chat=>[...chat, text]);
             getOpenChat(curr);
+            //setLast(!last);
             //scroll chat box to bottom
             ScrollToBottom();
             setText(''); //make textBox empty
