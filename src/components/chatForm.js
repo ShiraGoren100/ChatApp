@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from "react";
+import React, { useEffect, Component, useRef } from "react";
 import { Modal } from "bootstrap";
 import { BrowserRouter, Routes, Route, Link, withRouter, useNavigate, useLocation, useParams } from 'react-router-dom'
 //  import users from "../users";
@@ -8,21 +8,48 @@ import PersonalizeChat from "./personalChat";
 import addContact from "./addContact";
 import { useState } from "react"
 import axios from 'axios'
+import { HubConnectionBuilder } from '@microsoft/signalr';
 
 
-// async function setUser(userName){
-//     //put contact as current one
-//     await axios.post('https://localhost:7188/api/Contacts/setMe?id='+userName);
-
-//   }
 
 //create personalized chat screen
 function Chat() {
     //save user name sent from previous window
     var userName = String(window.localStorage.getItem("userName"));
 
-    //set user
-    // setUser(userName);
+    const [connection, setConnection] = useState(null);
+    const [chat1, setChat] = useState([]);
+    const latestChat = useRef(null);
+
+    latestChat.current = chat1;
+
+    useEffect(() => {
+        const newConnection = new HubConnectionBuilder()
+            .withUrl('https://localhost:7188/hubs/myHub')
+            .withAutomaticReconnect()
+            .build();
+        setConnection(newConnection);
+    }, []);
+
+    useEffect(() => {
+        if (connection) {
+            connection.start()
+                .then(result => {
+                    console.log('Connected!');
+
+                    connection.on('ReceiveMessage', (me, contact, message) => {
+                        console.log(curr);
+                        console.log(message);
+                        addText(chatq => [...chatq, message]);
+                        getOpenChat(curr);
+                        //scroll chat box to bottom
+                        ScrollToBottom();
+                        setText('');
+                    });
+                })
+                .catch(e => console.log('Connection failed: ', e));
+        }
+    }, [connection]);
 
 
     //get userPerson
@@ -57,6 +84,7 @@ function Chat() {
     useEffect(
         async () => {
             console.log("initializing curr");
+            console.log(curr);
 
             const res = await fetch('https://localhost:7188/api/Contacts/current?m_id=' + userName);
             const data = await res.json();
@@ -74,9 +102,7 @@ function Chat() {
             console.log(curr);
             const res = await fetch('https://localhost:7188/api/Contacts/' + curr.id + '/messages?m_id=' + userName);
             const data = await res.json();
-
             setopenChat(data);
-
         }, []);
 
     async function getstuff(c) {
@@ -90,7 +116,6 @@ function Chat() {
 
     function getOpenChat(c) {
         getstuff(c);
-
     }
 
 
@@ -159,6 +184,7 @@ function Chat() {
             axios.post('https://localhost:7188/api/Contacts/' + curr.id + '/messages?m_id=' + userName + '&content=' + text);
             axios.post(curr.server + 'api/Transfer?from=' + userName + '&to=' + curr.id + '&content=' + text);
             console.log("posted");
+            console.log(curr);
             addText(chat => [...chat, text]);
             getOpenChat(curr);
             //setLast(!last);
@@ -250,7 +276,6 @@ function Chat() {
     }
 }
 export default Chat;
-
 
 
 
