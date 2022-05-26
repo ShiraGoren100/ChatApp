@@ -8,6 +8,7 @@ import PersonalizeChat from "./personalChat";
 import addContact from "./addContact";
 import { useState } from "react"
 import axios from 'axios'
+import { ConsoleLogger } from "@microsoft/signalr/dist/esm/Utils";
 
 
 // async function setUser(userName){
@@ -218,7 +219,8 @@ function Chat() {
                 {/**####################################################################################### */}
                 <div class={"adresseeblock"}><h2>&nbsp;&nbsp;{curr.name}</h2></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-                    <div class="positioning">{addContact(userName, setUsers, contactList, userName)}</div>
+                    <div class="positioning">{addContact(userName, setList, contactList)}</div>
+                     
                 </div>
             </div>
 
@@ -242,7 +244,7 @@ function Chat() {
                 <div class={"chatblockNoBody"} id="starterChatBlock2"></div>
                 <div class={"adresseeblock"}></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-                    <div class="positioning">{addContact(userName, setUsers, contactList, userName)}</div>
+                    <div class="positioning">{addContact(userName, setList, contactList)}</div>
                 </div>
             </div>
 
