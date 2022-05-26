@@ -256,7 +256,7 @@ function Chat() {
                 {/**create adressee block */}
                 {/**####################################################################################### */}
                 <div class={"adresseeblock"}><h2>&nbsp;&nbsp;{curr.name}</h2></div>
-                <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
+                <div class={"userblock smallFont"}><h1>&nbsp; &nbsp; &nbsp;{userPerson.nickName}</h1>
 
                     <div class="positioning">{addContact(userName, setList, contactList, connection)}</div>
 

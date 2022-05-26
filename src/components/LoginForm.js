@@ -45,19 +45,33 @@ class Login extends React.Component {
         }
     }
 
-    fetchValidity=()=>{
-        fetch('https://localhost:7188/api/Contacts/exists?c_id='+this.state.name)
-        .then((response) => response.json())
-        .then(existing => {
-            this.setState({ exists: existing });
-        });
-        
-        fetch('https://localhost:7188/api/Contacts/passwordCheck?c_id='+this.state.name+'&p='+this.state.password)
-        .then((response) => response.json())
-        .then(valid => {
-            this.setState({ validPassword: valid });
-        });
+    fetchValidity1 = () => {
+        console.log(this.state.password);
+        console.log(this.state.name);
+        fetch('https://localhost:7188/api/Contacts/exists?c_id=' + this.state.name)
+            .then((response) => response.json())
+            .then(existing => {
+                this.setState({ exists: existing });
+
+            });
+        console.log(this.state.exists);
+        console.log(this.state.validPassword);
+
         console.log("HI");
+
+
+    }
+    fetchValidity2 = () => {
+        console.log(this.state.password);
+        console.log(this.state.name);
+        fetch('https://localhost:7188/api/Contacts/passwordCheck?c_id=' + this.state.name + '&p=' + this.state.password)
+            .then((response) => response.json())
+            .then(valid => {
+                this.setState({ validPassword: valid });
+            }).catch(e => console.log('fetch: ', e));
+        console.log("HI");
+
+
     }
     // async componentDidMount() {
     //     // when react first renders then it called componentDidMount()
@@ -71,25 +85,39 @@ class Login extends React.Component {
     OnFormSubmit = (event) => {
         event.preventDefault();
         console.log(this.state);
-              // //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        // //  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         // fetch('https://localhost:7188/api/Contacts/everyone')
         // .then((response) => response.json())
         // .then(ev => {
         //     this.setState({ everyone: ev });
         // });
-       
-    console.log(this.state);
-        if (!this.state.exists)
-        {
-                console.log("in1");
-                var myModal = new Modal(document.getElementById('staticBackdrop'), {
-                    keyboard: false
-                })
-                myModal.show()
-                event.preventDefault();
-                return;
 
-        }else {
+        // this.fetchValidity1();
+        // this.fetchValidity2();
+        fetch('https://localhost:7188/api/Contacts/exists?c_id=' + this.state.name)
+            .then((response) => response.json())
+            .then(existing => {
+                this.setState({ exists: existing });
+
+            }).catch(e => console.log('fetch: ', e));
+        fetch('https://localhost:7188/api/Contacts/passwordCheck?c_id=' + this.state.name + '&p=' + this.state.password)
+            .then((response) => response.json())
+            .then(valid => {
+                this.setState({ validPassword: valid });
+            }).catch(e => console.log('fetch: ', e));
+
+        console.log(this.state.exists);
+        console.log(this.state.validPassword);
+        if (!this.state.exists) {
+            console.log("in1");
+            var myModal = new Modal(document.getElementById('staticBackdrop'), {
+                keyboard: false
+            })
+            myModal.show()
+            event.preventDefault();
+            return;
+
+        } else {
             //check password
             if (!this.state.validPassword) {
                 console.log("in2");
@@ -110,10 +138,12 @@ class Login extends React.Component {
         if (this.state.error.name === '' && this.state.error.password === '') {
             let username = this.state.name;
             console.log("got through");
-            window.localStorage.setItem("userName",username);
+            window.localStorage.setItem("userName", username);
             //this.router.navigate(['/chat'], {state: {username}});
-            this.props.navigate('/chat', {name: username});
+            this.props.navigate('/chat', { name: username });
         }
+        console.log(this.state.exists);
+        console.log(this.state.validPassword);
     };
 
     formObject1 = event => {
@@ -137,9 +167,11 @@ class Login extends React.Component {
 
         this.setState({
             error,
-            [name]: value
-        })  
-        this.fetchValidity();
+            name: value
+        })
+        this.fetchValidity1();
+        console.log(name);
+
     };
 
 
@@ -147,10 +179,10 @@ class Login extends React.Component {
 
         event.preventDefault();
 
-        const { name, value } = event.target;
+        const { password, value } = event.target;
         let error = { ...this.state.error };
 
-        switch (name) {
+        switch (password) {
             // case "name":
             //     error.name = value.length == 0 ? "Please enter your name" : "";
             //     break;
@@ -164,9 +196,9 @@ class Login extends React.Component {
 
         this.setState({
             error,
-            [name]: value
+            password: value
         })
-        this.fetchValidity();
+        this.fetchValidity2();
     };
 
     render() {
@@ -176,7 +208,7 @@ class Login extends React.Component {
                 <div class="bg-success p-2 text-white">
                     <h2 class="l" >  <i class="bi bi-globe2"></i> webClient</h2>
                     <center>
-                        <div class="animate__animated animate__zoomIn"><h1 class ="l">
+                        <div class="animate__animated animate__zoomIn"><h1 class="l">
                             Welcome To Web - Client! <br></br></h1>
                         </div>
                     </center>
@@ -210,7 +242,8 @@ class Login extends React.Component {
                                     type="password"
                                     name="password"
                                     className={error.password.length > 0 ? "is-invalid form-control" : "form-control"}
-                                    onChange={this.formObject2} />
+                                    onChange={this.formObject2}
+                                />
 
                                 {error.password.length > 0 && (
                                     <span className="invalid-feedback">{error.password}</span>

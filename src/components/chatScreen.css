@@ -1,102 +1,104 @@
-
-
 .contactblock {
-    /* height: 569px;
+  /* height: 569px;
     width: 400px; */
-    min-width: 26.2%;
-    min-height: 78%;
-    background-color: rgb(189, 243, 198);
-    
-    position: absolute;
-    left: 16.7%;
-    top:17.5%;
-    overflow-y: auto;
-    overflow-x: hidden;
+  min-width: 26.2%;
+  min-height: 78%;
+  background-color: rgb(189, 243, 198);
+
+  position: absolute;
+  left: 16.7%;
+  top: 17.5%;
+  overflow-y: auto;
+  overflow-x: hidden;
 
 }
 
 
 .chatblock {
-    /* height: 533px;
+  /* height: 533px;
     width: 700px; */
-    width: 46.12%;
-    min-height: 74%;
-    background-color: rgb(159, 223, 170);
-    background-image: url("https://loveincorporated.blob.core.windows.net/contentimages/gallery/03211459-0607-4d07-8a6c-9966e3820a7d-Mount-Kirkjufell-Iceland.jpg");
-    position: absolute;
-    left: 43%;
-    bottom: 50%;
-    top:17%;
-    overflow-y: auto;
-    overflow-x: hidden;
+  width: 46.12%;
+  min-height: 74%;
+  background-color: rgb(159, 223, 170);
+  background-image: url("https://loveincorporated.blob.core.windows.net/contentimages/gallery/03211459-0607-4d07-8a6c-9966e3820a7d-Mount-Kirkjufell-Iceland.jpg");
+  position: absolute;
+  left: 43%;
+  bottom: 50%;
+  top: 17%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
 .chatblockNoBody {
-    /* height: 569px;
+  /* height: 569px;
     width: 700px; */
-    min-width: 46.12%;
-    min-height: 79%;
-    background-color: rgb(159, 223, 170);
-    background-image: url("https://www.motorhome.co.il/download/pictures/iceland_northern_light.jpg");
-    position: absolute;
-    /* left: 651px;
+  min-width: 46.12%;
+  min-height: 79%;
+  background-color: rgb(159, 223, 170);
+  background-image: url("https://www.motorhome.co.il/download/pictures/iceland_northern_light.jpg");
+  position: absolute;
+  /* left: 651px;
     bottom: 500px;
     top:130px; */
-    left: 43%;
-    bottom: 50%;
-    top:17%;
-    overflow-y: auto;
-    overflow-x: hidden;
+  left: 43%;
+  bottom: 50%;
+  top: 17%;
+  overflow-y: auto;
+  overflow-x: hidden;
 
 }
 
 .userblock {
-    /* height: 80px;
+  /* height: 80px;
     width: 402px; */
-    min-width: 27%;
-    min-height: 11%;
-    background-color: rgb(224, 224, 210);
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    position: absolute;
-    /* left: 248px;
+  min-width: 27%;
+  min-height: 11%;
+  background-color: rgb(224, 224, 210);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: absolute;
+  /* left: 248px;
     bottom: 1145px;
     top: 46px; */
-    left: 16.3%;
-    bottom: 85%;
-    top: 6.3%;
-    flex-grow: calc();
-    text-align: left;
-    display: inline-block;
-    /* padding: 15px 35px; */
-    padding: 1% 2%;
-    
-    font-size: 30%;
-    margin: 0.25% 0.22%;
-    transition-duration: 0.4s
+  left: 16.3%;
+  bottom: 85%;
+  top: 6.3%;
+  flex-grow: calc();
+  text-align: left;
+  display: inline-block;
+  /* padding: 15px 35px; */
+  padding: 0.5% 0.5%;
+  font-size: 10%;
+  margin: 0.25% 0.22%;
+  transition-duration: 0.4s;
+  overflow-wrap: break-word;
 }
 
 .adresseeblock {
-    /* height: 80px;
+  /* height: 80px;
     width: 700px; */
-    min-width: 46.25%;
-    min-height: 11%;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: rgb(224, 224, 210);
-    position: absolute;
-    /* top: 50px;
+  min-width: 46.25%;
+  min-height: 11%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(224, 224, 210);
+  position: absolute;
+  /* top: 50px;
     left: 652px;
     bottom: 1250px; */
-    left: 43%;
-    bottom: 85%;
-    top: 6.9%;
-    text-align: left;
-    display: inline-block;
-    padding: 1% 2%;
-    
+  left: 43%;
+  bottom: 85%;
+  top: 6.9%;
+  text-align: left;
+  display: inline-block;
+  padding: 1% 2%;
+  font-size: 20%;
+
 }
 
-  ::-webkit-scrollbar {
-    width: 0px;  /* Remove scrollbar space */
-    background: gray;  /* Optional: just make scrollbar invisible */
+::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: gray;
+  /* Optional: just make scrollbar invisible */
 }
 
 /* .userChat {
@@ -105,56 +107,59 @@
     position: relative;
     left: 10%;
     /* bottom: 20px; */
-    /* padding: 16px 30px; */
-    /* top: 15%;
+/* padding: 16px 30px; */
+/* top: 15%;
     word-wrap: break-word; */
 
-/* } */ 
+/* } */
 
 .addresseeChat {
-    width: 10%;
-    background-color: rgb(252, 252, 252);
-    position: relative;
-    left: 60%;
-    /* bottom: 20px; */
-    padding: 3% 6%;
-    top: 15%;
-    word-wrap: break-word;
-    
+  width: 10%;
+  background-color: rgb(252, 252, 252);
+  position: relative;
+  left: 60%;
+  /* bottom: 20px; */
+  padding: 3% 6%;
+  top: 15%;
+  word-wrap: break-word;
+
 }
+
 .positioning {
-    position: absolute;
-    right: 60%;
-    left: 40%;
-    bottom: 85%;
-  }
-  .img{
-    height: 55px;
-    width: 55px;
-    border-radius: 50%;   
-  }
-  .input-group{
-    position: absolute;
-    height: 5%;
-    width: 46.5%;
-    margin-top: 4px;
-    left: 42.7%;
-    bottom: 70%;
-    top:90%;
-  }
+  position: absolute;
+  right: 60%;
+  left: 40%;
+  bottom: 85%;
+}
 
-  .input-group-send{
-      border: 0ch;
-  }
- 
+.img {
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+}
+
+.input-group {
+  position: absolute;
+  height: 5%;
+  width: 46.5%;
+  margin-top: 4px;
+  left: 42.7%;
+  bottom: 70%;
+  top: 90%;
+}
+
+.input-group-send {
+  border: 0ch;
+}
 
 
-  /* div {
+
+/* div {
     position: relative;
     overflow: hidden;
   }*/
 
-  /* .inputImg {
+/* .inputImg {
     position: absolute;
     font-size: 50px;
     opacity: 0;
@@ -165,7 +170,7 @@
 
 
 
-  /* .file btn btn-lg btn-primary{
+/* .file btn btn-lg btn-primary{
     position: absolute;
     font-size: 50px;
     opacity: 0;
@@ -173,13 +178,13 @@
     top: 0;
   } */
 
-  .bg {
-    /* background-color:rgb(102, 102, 255); */
-    background-image: url("https://i.pinimg.com/236x/92/42/05/924205ea89862667d9de018b820019fd.jpg");
-    
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    position:absolute;
-  }
+.bg {
+  /* background-color:rgb(102, 102, 255); */
+  background-image: url("https://i.pinimg.com/236x/92/42/05/924205ea89862667d9de018b820019fd.jpg");
+
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+}
