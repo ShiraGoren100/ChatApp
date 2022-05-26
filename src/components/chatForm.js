@@ -40,10 +40,13 @@ function Chat() {
                     console.log('Connected!');
 
                     connection.on('ReceiveMessage', (me, contact, message) => {
-                        console.log(curr);
+                        console.log(contact);
                         console.log(message);
                         addText(chatq => [...chatq, message]);
-                        getOpenChat(curr);
+                        //getOpenChat(curr);
+                        getstuff(contact);
+                        console.log(curr);
+
                         //scroll chat box to bottom
                         ScrollToBottom();
                         setText('');
@@ -108,16 +111,20 @@ function Chat() {
         }, []);
 
     async function getstuff(c) {
+        const res = await fetch('https://localhost:7188/api/Contacts/' + c + '/messages?m_id=' + userName);
+        const data = await res.json();
+        setopenChat(data);
+        console.log(openChat);
+    }
+
+    async function getOpenChat(c) {
         setcurr(c);
         console.log(curr);
         const res = await fetch('https://localhost:7188/api/Contacts/' + c.id + '/messages?m_id=' + userName);
         const data = await res.json();
         setopenChat(data);
         console.log(openChat);
-    }
-
-    function getOpenChat(c) {
-        getstuff(c);
+        console.log(curr);
     }
 
 
