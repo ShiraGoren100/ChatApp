@@ -14,12 +14,12 @@ function PersonalizeChat(props){
     if(props.message.sender){
         return(
       <div class={"mt-1 userChat text-wrap mChat"} >
-      {props.message.content}&nbsp; &nbsp;<span class="time">{props.message.sentDate}</span></div>
+      {props.message.content}&nbsp; &nbsp;<span class = "smallFont"><span class = "time2">{props.message.sentDate}</span></span></div>
         );
     }
     return (
         <div class={"mt-1 addresseeChat text-wrap mChat"}>
-        {props.message.content}&nbsp;&nbsp; <span class="time">{props.message.sentDate}</span></div>
+        {props.message.content}&nbsp;&nbsp;<span class = "smallFont"><span class = "time2">{props.message.sentDate}</span></span></div>
     );
 
       
