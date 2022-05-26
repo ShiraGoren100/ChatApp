@@ -19,9 +19,19 @@ Make sure you hav NodeJS and npm installed on your PC.
 
 `npm install react-router-dom –save`
 
+`npm install cors`
+
+`npm install axios`
+
+`npm i --save @microsoft/signalr`
 
 
 ## Run The Application:
+
+Befor running the client make sure you run the server.
+
+https://github.com/ShiraGoren100/WebServiceEx2
+
 In the project directory, you can run:
 
 ### `npm start`
