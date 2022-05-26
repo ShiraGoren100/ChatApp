@@ -10,6 +10,8 @@ import { useState } from "react"
 import axios from 'axios'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
+import { ConsoleLogger } from "@microsoft/signalr/dist/esm/Utils";
+
 
 
 //create personalized chat screen
@@ -243,7 +245,9 @@ function Chat() {
                 {/**####################################################################################### */}
                 <div class={"adresseeblock"}><h2>&nbsp;&nbsp;{curr.name}</h2></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-                    <div class="positioning">{addContact(userName, setUsers, contactList, userName, connection)}</div>
+
+                    <div class="positioning">{addContact(userName, setList, contactList,connection)}</div>
+                     
                 </div>
             </div>
 
@@ -267,7 +271,7 @@ function Chat() {
                 <div class={"chatblockNoBody"} id="starterChatBlock2"></div>
                 <div class={"adresseeblock"}></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-                    <div class="positioning">{addContact(userName, setUsers, contactList, userName)}</div>
+                    <div class="positioning">{addContact(userName, setList, contactList)}</div>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
-import users from "../users";
+// import users from "../users";
 import React, { Component, useRef, useState } from "react";
-import AllChats from "../AllChats";
+// import AllChats from "../AllChats";
 import number from "./number";
 import axios from 'axios'
 
@@ -16,7 +16,9 @@ class Contact extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            first: true,
             yes: false,
+            contacts: [],
             name: '',
             nickname: '',
             server: '',
@@ -40,6 +42,21 @@ class Contact extends React.Component {
             });
     }
 
+    getContacts=()=>{
+        //console.log(name);
+        console.log('getting new contactList');
+        fetch('https://localhost:7188/api/Contacts?m_id='+this.props.userName)
+        .then((response) => response.json())
+        .then(cont => {
+            this.setState({
+                contacts: cont,
+                first: false
+            })
+        });;
+    
+        //this.props.setFunction(this.state.contacts); 
+    }
+
     alreadyAContact = (value, contactLis) => {
         {/*loop through contacts and create contact buttons for each*/ }
         let i = 0;
@@ -54,12 +71,14 @@ class Contact extends React.Component {
 
 
     formObject = event => {
-
+        //console.log(this.props.contactList);
+        //console.log(this.state.contacts);
         event.preventDefault();
         const { name, value } = event.target;
         let error = { ...this.state.error };
         this.fetchValidity(value);
-
+        this.getContacts();
+  
         switch (name) {
             case "name":
                 if (value === '') { error.name = ""; break }
@@ -71,20 +90,26 @@ class Contact extends React.Component {
             default:
                 break;
         }
+    
 
         this.setState({
             error,
-            [name]: value
+            [name]: value,
+            contacts: this.props.contactList,
+            first: false
         })
+    
+        //this.props.setFunction(this.state.contacts); 
     };
 
     OnFormSubmit = (event) => {
         event.preventDefault();
+        console.log(this.state.first);
         if (this.state.error.name !== '') {
             event.preventDefault();
             return;
         }
-
+        
         axios.post('https://localhost:7188/api/Contacts?m_id=' +
             this.props.userName + '&c_id=' + this.state.name + '&name=' + this.state.nickname +
              '&server=' + this.state.server).then(function (response) {
@@ -93,7 +118,8 @@ class Contact extends React.Component {
                 console.log(error);
                 this.setState({ sucssess: false });
             });
-
+    
+           
         if (this.state.sucssess) {
             //change server to my server
             axios.post(this.state.server + '/api/Invitations?from=' + this.props.userName + '&to=' + this.state.name +
@@ -101,55 +127,40 @@ class Contact extends React.Component {
                     console.log(error);
                     this.setState({ sucssess: false });
                 });
+             
         }
         if (!this.state.sucssess) {
             console.log("somthing went wrong with other server");
         }
         else {
             //close here modal.
-            // window.location.reload(false);
-            console.log('getting new contactList');
-            fetch('https://localhost:7188/api/Contacts?m_id='+this.props.userName)
-            .then((response) => response.json())
-            .then(c =>{this.props.setFunction(c)});            
+            //window.location.reload(false);
+            this.getContacts();
+
+            //this.props.setFunction(this.state.contacts); 
+            this.setState({ 
+                name: '',
+                nickname: '',
+                 server: ''
+                }); //make textBox empty     
             this.props.closeBox.current.click();
 
+            //window.location.reload(false);
         }
-
-        // axios.post(`https://localhost:7188/api/Contacts`, {})
-        // .then(res => {
-        // console.log(res);
-        // console.log(res.data);
-        // })
-
-        // let num = random(3,1000000);
-        // while (number.includes(num)) {
-        //     num = random(3,1000000);
-        // }
-        // const dict ={};
-        // const dict2={};
-        // var chat =[];
-        // AllChats[num] = chat;
-        // dict[this.state.name] = num;
-        // for (const [key, value] of Object.entries(users[this.props.myName][2])) {
-        //     dict[key] = value;
-        // }
-        // console.log("the num is " + num)
-
-        // dict2[this.props.myName] = num;
-        // for (const [key, value] of Object.entries(users[this.state.name][2])) {
-        //     dict2[key] = value;
-        // }
-        // this.props.setFunction(users[this.props.myName][2] = dict);
-        // users[this.state.name][2] = dict2;
-        // this.props.closeBox.current.click();
-        // num++;
     };
     render() {
         let c = this.props.closeBox;
         const { error } = this.state;
-
-
+        if (this.state.first){
+            this.props.setFunction(this.props.contactList);
+        
+        } else{
+            
+            this.props.setFunction(this.state.contacts);
+            
+           
+        }
+  
         return (
             <div>
                 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" ><i class="bi bi-person-plus"></i></button>
@@ -166,6 +177,7 @@ class Contact extends React.Component {
                                     <div class="mb-3">
                                         <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter contact's id" required
                                             name="name"
+                                            value={this.state.name}
                                             onChange={this.formObject}
                                             className={error.name.length > 0 ? "is-invalid form-control" : "form-control"} />
 
@@ -177,6 +189,7 @@ class Contact extends React.Component {
                                     <div class="mb-3">
                                         <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter contact's nickname" required
                                             name="nickname"
+                                            value={this.state.nickname}
                                             onChange={this.formObject}
                                             className={error.nickname.length > 0 ? "is-invalid form-control" : "form-control"} />
 
@@ -189,6 +202,7 @@ class Contact extends React.Component {
                                         <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter contact's server" required
                                             name="server"
                                             onChange={this.formObject}
+                                            value={this.state.server}
                                             className={error.nickname.length > 0 ? "is-invalid form-control" : "form-control"} />
 
                                         {error.nickname.length > 0 && (
@@ -209,14 +223,14 @@ class Contact extends React.Component {
         );
     }
 }
-function AddContact(props, props2, props3, props4) {
+function AddContact(props, props2, props3) {
     let closeBox = useRef(undefined);
-    let myName = props;
+    let userName = props;
     let setFunction = props2;
     let contactList = props3;
-    let userName = props4;
-    return <Contact {...props} myName={myName} setFunction={setFunction}
-        contactList={contactList} userName={userName} con closeBox={closeBox} />
+    
+    return <Contact {...props} userName={userName} setFunction={setFunction}
+        contactList={contactList} con closeBox={closeBox} />
 }
 
 export default AddContact;
