@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link, withRouter, useNavigate, useLocatio
 import "./chatScreen.css";
 import ContactButton from "./contactButton";
 import PersonalizeChat from "./personalChat";
-import addContact from "./addContact";
+import addContact from "./AddContacts";
 import { useState } from "react"
 import axios from 'axios'
 import { HubConnectionBuilder } from '@microsoft/signalr';
@@ -51,6 +51,13 @@ function Chat() {
                         ScrollToBottom();
                         setText('');
                     });
+
+                    connection.on('AddContact', (me, contact) => {
+                        console.log(me);
+                        console.log(contact);
+                        getContacts(contact);
+                    });
+
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
@@ -109,6 +116,12 @@ function Chat() {
             const data = await res.json();
             setopenChat(data);
         }, []);
+
+    async function getContacts(c) {
+        const res = await fetch('https://localhost:7188/api/Contacts?m_id=' + userName);
+        const data = await res.json();
+        setList(data);
+    }
 
     async function getstuff(c) {
         const res = await fetch('https://localhost:7188/api/Contacts/' + c + '/messages?m_id=' + userName);
@@ -208,22 +221,16 @@ function Chat() {
     //open screen with curr chat open, if curr is not an empty contact
     if (curr.id != "null") {
         return (
-
             <div class="bg">
-
                 <div class={"contactblock"}>
-
                     {/*loop through contacts and create contact buttons for each*/}
                     {Array.from({ length: contactList.length }).map((_, index) => (
                         <ContactButton contact={contactList[index]} user={userName}
                             func={getOpenChat}></ContactButton>
                     ))}
-
                 </div>
 
-
                 <div class={"chatblock"} id="starterChatBlock">
-
                     {/*loop through chat with current and create chat screen with saved messages*/}
                     {Array.from({ length: openChat.length }).map((_, index) => (
                         <div>
@@ -232,8 +239,6 @@ function Chat() {
                         </div>
 
                     ))}
-
-
                 </div>
                 {/**create text box */}
                 <form onSubmit={createMessage}>
@@ -253,35 +258,29 @@ function Chat() {
                 <div class={"adresseeblock"}><h2>&nbsp;&nbsp;{curr.name}</h2></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
 
-                    <div class="positioning">{addContact(userName, setList, contactList,connection)}</div>
-                     
+                    <div class="positioning">{addContact(userName, setList, contactList, connection)}</div>
+
                 </div>
             </div>
-
         );
     }
     //if no contact was clicked on yet open screen with no chats open
     else {
         return (
-
             <div class=".container-fluid bg">
                 <div class={"contactblock"}>
-
                     {/*loop through contacts and create contact buttons for each*/}
                     {Array.from({ length: contactList.length }).map((_, index) => (
                         <ContactButton contact={contactList[index]} user={userName}
                             func={getOpenChat}></ContactButton>
                     ))}
-
                 </div>
-
                 <div class={"chatblockNoBody"} id="starterChatBlock2"></div>
                 <div class={"adresseeblock"}></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
                     <div class="positioning">{addContact(userName, setList, contactList)}</div>
                 </div>
             </div>
-
         );
     }
 }
