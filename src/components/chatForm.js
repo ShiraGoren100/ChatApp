@@ -202,7 +202,6 @@ function Chat() {
 
             <div class="bg">
 
-
                 <div class={"contactblock"}>
 
                     {/*loop through contacts and create contact buttons for each*/}
@@ -244,7 +243,7 @@ function Chat() {
                 {/**####################################################################################### */}
                 <div class={"adresseeblock"}><h2>&nbsp;&nbsp;{curr.name}</h2></div>
                 <div class={"userblock"}><h1>&nbsp;&nbsp;{userPerson.nickName}</h1>
-                    <div class="positioning">{addContact(userName, setUsers, contactList, userName)}</div>
+                    <div class="positioning">{addContact(userName, setUsers, contactList, userName, connection)}</div>
                 </div>
             </div>
 
