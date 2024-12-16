@@ -2,8 +2,10 @@
 
 - **Shira Goren** 
 
-- **Sharon Weiss** 
+- **Sharon Weiss**
 
+## About the project:
+This is a web chat app, made to replicate WhatsApp, using REACT and NODE.JS
 ## Required Insatallation:
 
 Make sure you hav NodeJS and npm installed on your PC.
