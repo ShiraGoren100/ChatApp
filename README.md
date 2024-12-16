@@ -1,8 +1,8 @@
 ## Meet Our Team:
 
-- **Shira Goren:** 207814989
+- **Shira Goren:** 
 
-- **Sharon Weiss:** 207488321
+- **Sharon Weiss:** 
 
 ## Required Insatallation:
 
