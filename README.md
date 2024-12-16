@@ -1,8 +1,8 @@
 ## Meet Our Team:
 
-- **Shira Goren:** 
+- **Shira Goren** 
 
-- **Sharon Weiss:** 
+- **Sharon Weiss** 
 
 ## Required Insatallation:
 
