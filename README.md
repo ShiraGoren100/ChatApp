@@ -30,7 +30,7 @@ Make sure you hav NodeJS and npm installed on your PC.
 
 Befor running the client make sure you run the server.
 
-https://github.com/ShiraGoren100/WebServiceEx2](https://github.com/ShiraGoren100/ChatAppServer
+https://github.com/ShiraGoren100/ChatAppServer
 
 In the project directory, you can run:
 
